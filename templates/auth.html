@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}{% if mode=='signup' %}Create your account{% elif mode=='forgot' %}Reset password{% else %}Welcome back{% endif %}{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-aside">
+    <span class="eyebrow">A CITY FULL OF SIDE QUESTS</span>
+    <h1>{% if mode=='signup' %}Your next favourite place is out there.{% elif mode=='forgot' %}Let's get you back in.{% else %}Good to see you again.{% endif %}</h1>
+    <p>{% if mode=='signup' %}Keep your saved places, day plans and little discoveries in one place.{% elif mode=='forgot' %}We'll send a reset link to your email address.{% else %}Pick up right where you left off.{% endif %}</p>
+    <div class="auth-art"><span>✳</span><span>⌖</span><span>↗</span><span>✦</span></div>
+    <small>Roamly · Discover at your own pace</small>
+  </div>
+  <div class="auth-form-wrap">
+    <form class="auth-form" method="post">
+      <span class="eyebrow">{% if mode=='signup' %}JOIN THE CURIOUS{% elif mode=='forgot' %}PASSWORD RESET{% else %}YOUR ADVENTURE CONTINUES{% endif %}</span>
+      <h2>{% if mode=='signup' %}Create your account{% elif mode=='forgot' %}Reset your password{% else %}Welcome back{% endif %}</h2>
+      <p>{% if mode=='signup' %}Save places and keep your itineraries ready for later.{% elif mode=='forgot' %}Enter your email and we'll send you a reset link.{% else %}Sign in to pick up where you left off.{% endif %}</p>
+
+      {% if mode=='signup' %}
+      <label>Full name<input name="name" autocomplete="name" placeholder="What should we call you?" required></label>
+      {% endif %}
+
+      <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
+
+      {% if mode != 'forgot' %}
+      <label>
+        Password
+        <input type="password" name="password" autocomplete="{{ 'new-password' if mode=='signup' else 'current-password' }}" placeholder="{{ 'At least 8 characters' if mode=='signup' else 'Your password' }}" minlength="{{ 8 if mode=='signup' else 1 }}" required>
+      </label>
+      {% if mode=='login' %}
+      <div class="forgot-link-row">
+        <a href="{{ url_for('forgot_password') }}" class="forgot-link">Forgot password?</a>
+      </div>
+      {% endif %}
+      {% endif %}
+
+      {% if mode=='signup' %}
+      <label>Confirm password<input type="password" name="confirm_password" autocomplete="new-password" placeholder="Type it again" minlength="8" required></label>
+      <small class="form-hint">Prototype note: use an email/password account.</small>
+      {% endif %}
+
+      <button class="btn btn-primary btn-full" type="submit" id="auth-submit-btn">
+        {% if mode=='signup' %}Create account{% elif mode=='forgot' %}Send reset link{% else %}Sign in{% endif %} <span>↗</span>
+      </button>
+
+      <div class="auth-switch">
+        {% if mode=='signup' %}
+          Already have an account? <a href="{{ url_for('login') }}">Log in</a>
+        {% elif mode=='forgot' %}
+          Remembered it? <a href="{{ url_for('login') }}">Back to sign in</a>
+        {% else %}
+          New to Roamly? <a href="{{ url_for('signup') }}">Create an account</a>
+        {% endif %}
+      </div>
+
+      {% if mode != 'forgot' %}
+      <div class="secure-note">⌑ Your password is stored as a secure hash in the local demo database.</div>
+      {% else %}
+      <div class="secure-note">⌑ Prototype: no real email is sent. This simulates the reset flow.</div>
+      {% endif %}
+    </form>
+  </div>
+</section>
+{% endblock %}

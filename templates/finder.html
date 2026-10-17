@@ -1,0 +1,260 @@
+{% extends 'base.html' %}{% block title %}Find My Perfect Place{% endblock %}{% block content %}
+<section class="page-heading finder-heading">
+  <span class="eyebrow">PERSONALISED FOR YOU</span>
+  <h1>Find your <em>perfect spot.</em></h1>
+  <p>Answer a few quick questions and we'll suggest places tailored to your group, mood and budget.</p>
+</section>
+
+<div class="finder-layout">
+  <!-- Questionnaire Steps -->
+  <div class="finder-form-wrap" id="finder-form-wrap">
+
+    <!-- Step 1: Group -->
+    <div class="finder-step active" id="step-1" data-step="1">
+      <div class="finder-step-header">
+        <span class="step-chip">01 / 06</span>
+        <h2>Who are you going with?</h2>
+        <p>Pick the option that best describes your group.</p>
+      </div>
+      <div class="finder-options group-options">
+        <button class="finder-opt" data-val="solo" id="group-solo">
+          <span class="finder-opt-icon">🧍</span>
+          <strong>Just me</strong>
+          <small>Solo explorer</small>
+        </button>
+        <button class="finder-opt" data-val="couple" id="group-couple">
+          <span class="finder-opt-icon">👫</span>
+          <strong>Couple</strong>
+          <small>Date or partner trip</small>
+        </button>
+        <button class="finder-opt" data-val="friends" id="group-friends">
+          <span class="finder-opt-icon">👯</span>
+          <strong>Friends</strong>
+          <small>Group adventure</small>
+        </button>
+        <button class="finder-opt" data-val="family" id="group-family">
+          <span class="finder-opt-icon">👨‍👩‍👧</span>
+          <strong>Family</strong>
+          <small>With kids or elders</small>
+        </button>
+      </div>
+      <label class="finder-number-label">How many people? <input type="number" id="people-count" min="1" max="50" value="2" class="finder-number-input"></label>
+    </div>
+
+    <!-- Step 2: Vibe -->
+    <div class="finder-step" id="step-2" data-step="2">
+      <div class="finder-step-header">
+        <span class="step-chip">02 / 06</span>
+        <h2>What's your vibe today?</h2>
+        <p>You can pick more than one mood.</p>
+      </div>
+      <div class="finder-options vibe-options">
+        <button class="finder-opt multi-sel" data-val="history" id="vibe-history">
+          <span class="finder-opt-icon">🏛️</span>
+          <strong>History & Heritage</strong>
+          <small>Forts, museums, old lanes</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="nature" id="vibe-nature">
+          <span class="finder-opt-icon">🌿</span>
+          <strong>Nature & Green</strong>
+          <small>Parks, forests, trails</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="food" id="vibe-food">
+          <span class="finder-opt-icon">🍽️</span>
+          <strong>Food & Cafés</strong>
+          <small>Street food, local eats</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="photography" id="vibe-photography">
+          <span class="finder-opt-icon">📸</span>
+          <strong>Photography</strong>
+          <small>Scenic & Instagrammable</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="culture" id="vibe-culture">
+          <span class="finder-opt-icon">🎨</span>
+          <strong>Art & Culture</strong>
+          <small>Galleries, markets, crafts</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="walking" id="vibe-walking">
+          <span class="finder-opt-icon">🚶</span>
+          <strong>Walking & Exploring</strong>
+          <small>Promenades, lanes, ghats</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="architecture" id="vibe-architecture">
+          <span class="finder-opt-icon">🕌</span>
+          <strong>Architecture</strong>
+          <small>Unique structures & design</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="shopping" id="vibe-shopping">
+          <span class="finder-opt-icon">🛍️</span>
+          <strong>Shopping & Markets</strong>
+          <small>Bazaars & local finds</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: Budget -->
+    <div class="finder-step" id="step-3" data-step="3">
+      <div class="finder-step-header">
+        <span class="step-chip">03 / 06</span>
+        <h2>What's your budget per person?</h2>
+        <p>Entry fees, food and activities combined.</p>
+      </div>
+      <div class="finder-options budget-options">
+        <button class="finder-opt" data-val="free" id="budget-free">
+          <span class="finder-opt-icon">🆓</span>
+          <strong>Free only</strong>
+          <small>Zero spend zones</small>
+        </button>
+        <button class="finder-opt" data-val="low" id="budget-low">
+          <span class="finder-opt-icon">💚</span>
+          <strong>Under ₹300</strong>
+          <small>Budget-friendly</small>
+        </button>
+        <button class="finder-opt" data-val="mid" id="budget-mid">
+          <span class="finder-opt-icon">💛</span>
+          <strong>₹300–₹700</strong>
+          <small>Moderate spend</small>
+        </button>
+        <button class="finder-opt" data-val="any" id="budget-any">
+          <span class="finder-opt-icon">💜</span>
+          <strong>Open budget</strong>
+          <small>Show me everything</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 4: Distance -->
+    <div class="finder-step" id="step-4" data-step="4">
+      <div class="finder-step-header">
+        <span class="step-chip">04 / 06</span>
+        <h2>How far are you willing to travel?</h2>
+        <p>From central Mumbai.</p>
+      </div>
+      <div class="finder-options distance-options">
+        <button class="finder-opt" data-val="5" id="dist-5">
+          <span class="finder-opt-icon">🚶</span>
+          <strong>Within 5 km</strong>
+          <small>Just around the corner</small>
+        </button>
+        <button class="finder-opt" data-val="10" id="dist-10">
+          <span class="finder-opt-icon">🛺</span>
+          <strong>Within 10 km</strong>
+          <small>A short auto ride</small>
+        </button>
+        <button class="finder-opt" data-val="20" id="dist-20">
+          <span class="finder-opt-icon">🚉</span>
+          <strong>Within 20 km</strong>
+          <small>A train journey away</small>
+        </button>
+        <button class="finder-opt" data-val="50" id="dist-50">
+          <span class="finder-opt-icon">🚌</span>
+          <strong>Anywhere</strong>
+          <small>Day trip is fine</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 5: Things to avoid -->
+    <div class="finder-step" id="step-5" data-step="5">
+      <div class="finder-step-header">
+        <span class="step-chip">05 / 06</span>
+        <h2>Anything to avoid or need?</h2>
+        <p>Help us filter out places that don't work for you.</p>
+      </div>
+      <div class="finder-options avoid-options">
+        <button class="finder-opt multi-sel" data-val="no-crowds" id="avoid-crowds">
+          <span class="finder-opt-icon">🔕</span>
+          <strong>Avoid crowds</strong>
+          <small>Peaceful & quiet spots</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="kid-friendly" id="avoid-kids">
+          <span class="finder-opt-icon">🧒</span>
+          <strong>Kid-friendly</strong>
+          <small>Safe for children</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="early-morning" id="avoid-morning">
+          <span class="finder-opt-icon">🌅</span>
+          <strong>Early morning visit</strong>
+          <small>Opens before 8am</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="indoor" id="avoid-indoor">
+          <span class="finder-opt-icon">🏠</span>
+          <strong>Prefer indoors</strong>
+          <small>Covered / AC options</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="accessible" id="avoid-accessible">
+          <span class="finder-opt-icon">♿</span>
+          <strong>Accessibility needed</strong>
+          <small>Wheelchair accessible</small>
+        </button>
+        <button class="finder-opt multi-sel" data-val="sunset" id="avoid-sunset">
+          <span class="finder-opt-icon">🌇</span>
+          <strong>Sunset / evening</strong>
+          <small>Best at dusk</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 6: Pace -->
+    <div class="finder-step" id="step-6" data-step="6">
+      <div class="finder-step-header">
+        <span class="step-chip">06 / 06</span>
+        <h2>What's your pace for the day?</h2>
+        <p>This helps us suggest the right number of spots.</p>
+      </div>
+      <div class="finder-options pace-options">
+        <button class="finder-opt" data-val="chill" id="pace-chill">
+          <span class="finder-opt-icon">😌</span>
+          <strong>Slow & easy</strong>
+          <small>1–2 places, no rush</small>
+        </button>
+        <button class="finder-opt" data-val="moderate" id="pace-moderate">
+          <span class="finder-opt-icon">🚶</span>
+          <strong>Moderate</strong>
+          <small>3–4 places, good pacing</small>
+        </button>
+        <button class="finder-opt" data-val="packed" id="pace-packed">
+          <span class="finder-opt-icon">⚡</span>
+          <strong>Pack it in</strong>
+          <small>5+ stops, full day</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="finder-nav">
+      <button class="btn btn-quiet" id="finder-prev-btn" style="display:none;">← Back</button>
+      <div class="finder-progress" id="finder-progress">
+        <span class="progress-dot active" data-step="1"></span>
+        <span class="progress-dot" data-step="2"></span>
+        <span class="progress-dot" data-step="3"></span>
+        <span class="progress-dot" data-step="4"></span>
+        <span class="progress-dot" data-step="5"></span>
+        <span class="progress-dot" data-step="6"></span>
+      </div>
+      <button class="btn btn-primary" id="finder-next-btn">Next →</button>
+    </div>
+  </div>
+
+  <!-- Results Panel -->
+  <div class="finder-results-wrap" id="finder-results-wrap" style="display:none;">
+    <div class="finder-results-header">
+      <span class="eyebrow">PLACES PICKED FOR YOU</span>
+      <h2>Here's where <em>you should go.</em></h2>
+      <p id="finder-results-subtitle">Based on your answers, we think you'll love these spots.</p>
+      <button class="btn btn-quiet" id="finder-restart-btn">← Redo my answers</button>
+    </div>
+    <div id="finder-suggested-order" style="display:none;"></div>
+    <div class="places-grid" id="finder-results-grid"></div>
+    <div class="finder-explore-more">
+      <a class="btn btn-outline" href="{{ url_for('discover') }}">See all places →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+window.ALL_PLACES = {{ places_json | safe if places_json is defined else '[]' }};
+window.FINDER_ENABLED = true;
+window.LOGGED_IN = {{ 1 if current_user else 0 }};
+</script>
+{% endblock %}

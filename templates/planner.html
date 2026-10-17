@@ -1,0 +1,141 @@
+{% extends 'base.html' %}{% block title %}Plan your itinerary{% endblock %}{% block content %}
+<section class="page-heading">
+  <span class="eyebrow">YOUR DAY, YOUR PACE</span>
+  <h1>Make a plan that <em>flows.</em></h1>
+  <p>Name your trip, set your details and add stops. We'll help you figure out the best order and timing.</p>
+</section>
+
+<form class="planner-layout" method="post" id="planner-form">
+  <div class="planner-main">
+
+    <section class="panel">
+      <div class="panel-heading">
+        <span class="step-no">01</span>
+        <div>
+          <h2>Your schedule</h2>
+          <p>Set the basics, add all your stops, then get a smart recommended order.</p>
+        </div>
+      </div>
+
+      <!-- Trip identity row -->
+      <div class="trip-identity-row">
+        <label class="trip-id-field">
+          <span>Trip name</span>
+          <input name="title" id="trip-title-input" placeholder="e.g. A Saturday in Bandra" required>
+        </label>
+        <label class="trip-id-field">
+          <span>Trip date</span>
+          <input type="date" name="trip_date" id="trip-date">
+        </label>
+        <label class="trip-id-field">
+          <span>People</span>
+          <input type="number" name="group_size" id="group-size-input" min="1" max="50" value="2" required>
+        </label>
+        <label class="trip-id-field">
+          <span>Budget (₹)</span>
+          <input type="number" name="budget" id="group-budget" min="0" value="2000">
+        </label>
+      </div>
+
+      <!-- Start location -->
+      <div class="start-location-row">
+        <label class="start-loc-field">
+          <span class="start-loc-label">📍 Starting from</span>
+          <input name="start_location" id="trip-start-location" placeholder="e.g. Dadar Station, Bandra, CST…" autocomplete="off">
+        </label>
+        <label class="start-loc-field start-loc-small">
+          <span class="start-loc-label">📝 Trip notes</span>
+          <input name="notes" placeholder="Dietary needs, pace, anything special…">
+        </label>
+      </div>
+
+      <!-- Stops -->
+      <div id="stops-container">
+        <div class="stop-editor">
+          <div class="stop-editor-top">
+            <span class="stop-index">STOP 01</span>
+            <button type="button" class="remove-stop" disabled>Remove −</button>
+          </div>
+          <div class="form-grid">
+            <label>Place / activity
+              <input name="stop_name[]" list="place-options" placeholder="Search or type a place" required>
+            </label>
+            <label>Visit date<input type="date" name="stop_date[]" class="stop-date"></label>
+            <label>Start time<input type="time" name="start_time[]" value="10:00"></label>
+            <label>End time<input type="time" name="end_time[]" value="11:30"></label>
+            <label>Transport mode
+              <select name="transport[]">
+                <option value="public">Public transport</option>
+                <option value="train">Local train</option>
+                <option value="bus">Bus</option>
+                <option value="metro">Metro</option>
+                <option value="taxi">Taxi / cab</option>
+                <option value="auto">Auto-rickshaw</option>
+                <option value="walk">Walk</option>
+                <option value="bike">Two-wheeler</option>
+                <option value="car">Car</option>
+              </select>
+            </label>
+            <label>Transport cost (₹)
+              <input type="number" name="cost[]" class="stop-cost" min="0" value="0">
+            </label>
+            <label>Entry / activity cost (₹)
+              <input type="number" name="entry_cost[]" class="stop-entry-cost" min="0" value="0" placeholder="Ticket, food etc.">
+            </label>
+            <label class="full-field">Stop notes
+              <input name="stop_notes[]" placeholder="Auto-filled with best time tip · add booking reminders, etc.">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <datalist id="place-options">{% for p in places %}<option value="{{ p.name }}">{% endfor %}</datalist>
+
+      <div class="planner-add-actions">
+        <button class="btn btn-outline" type="button" id="add-stop">＋ Add another stop</button>
+        <a class="btn btn-quiet" href="{{ url_for('discover') }}">🔍 Find more places</a>
+        <button class="btn btn-primary" type="button" id="recommend-order-btn">✦ Recommend best order</button>
+      </div>
+
+      <!-- Recommended plan panel -->
+      <div id="recommended-plan-panel" class="recommended-plan-panel" style="display:none;">
+        <div class="rec-plan-header">
+          <span class="eyebrow">SMART SUGGESTED ORDER</span>
+          <h3>Here's your recommended day plan</h3>
+          <p>Ordered by best time of day — morning spots first, sunset spots last. Adjust to fit your preferences.</p>
+        </div>
+        <div id="recommended-plan-list"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <aside class="planner-side">
+    <div class="budget-card">
+      <span class="eyebrow">TRIP SNAPSHOT</span>
+      <div class="budget-big" id="total-cost">₹0</div>
+      <p>Total estimated spend</p>
+      <div class="budget-row"><span>Transport costs</span><strong id="transport-cost">₹0</strong></div>
+      <div class="budget-row"><span>Entry / activity costs</span><strong id="entry-cost-total">₹0</strong></div>
+      <div class="budget-row"><span>Your budget</span><strong id="budget-label">₹2,000</strong></div>
+      <div class="budget-row"><span>Remaining</span><strong id="remaining">₹2,000</strong></div>
+      <div class="budget-meter"><span id="budget-meter-fill"></span></div>
+      <small id="budget-warning">Transport + entry estimates.</small>
+      <hr>
+      <div class="budget-row"><span>Stops planned</span><strong id="stop-count">1</strong></div>
+      <div class="budget-row"><span>Group size</span><strong id="people-label">2 people</strong></div>
+      <div class="budget-row"><span>Est. total time</span><strong id="estimated-duration">—</strong></div>
+      <small class="form-hint">Entry costs are per person estimates. Multiply by group size for total. Transport fares are your estimates.</small>
+      <button class="btn btn-primary btn-full" type="submit">Save itinerary ↗</button>
+      <a class="btn btn-quiet btn-full" href="{{ url_for('map_view') }}">View map first</a>
+    </div>
+  </aside>
+</form>
+
+<script>
+window.PLANNER_ENABLED = true;
+window.ALL_PLACES = {{ all_places | tojson }};
+window.LOGGED_IN = {{ 1 if current_user else 0 }};
+window.ADD_PLACE = "{{ add_place }}";
+</script>
+{% endblock %}

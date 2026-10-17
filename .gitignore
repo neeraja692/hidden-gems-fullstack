@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Local databases & secrets
+hidden_gems.db
+*.sqlite3
+*.db
+.env
+.env.local
+
+# Temporary / testing artifacts
+temp_chrome_profile/
+mnt/
+*.pptx
+
+# Operating system / IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+

@@ -1,0 +1,95 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}Roamly{% endblock %} · Roamly</title><meta name="description" content="Roamly — Discover hidden gems, plan itineraries and explore your city like never before."><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">{% block head %}{% endblock %}</head><body data-logged-in="{{ 1 if current_user else 0 }}">
+
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">R.</span><span>Roam<span class="brand-accent">ly</span></span></a>
+  <nav>
+    <a href="{{ url_for('discover') }}">Discover</a>
+    <a href="{{ url_for('finder') }}">Find My Place</a>
+    <a href="{{ url_for('map_view') }}">Map</a>
+    {% if current_user %}
+    <a href="{{ url_for('planner') }}">Plan a trip</a>
+    <a href="{{ url_for('dashboard') }}">My trips</a>
+    <a href="{{ url_for('profile') }}">Profile</a>
+    <a class="nav-cta" href="{{ url_for('logout') }}">Log out</a>
+    {% else %}
+    <a href="{{ url_for('login') }}">Log in</a>
+    <a class="nav-cta" href="{{ url_for('signup') }}">Get started ↗</a>
+    {% endif %}
+  </nav>
+  <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('nav-open')" aria-label="Toggle menu">☰</button>
+</header>
+
+<main class="page">
+  {% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="brand"><span class="brand-mark">R.</span><span>Roam<span class="brand-accent">ly</span></span></div>
+  <p>Find the places that make a city feel personal.</p>
+  <span>Prototype · Always verify live details before travelling.</span>
+</footer>
+
+<!-- ══ PLACE DETAIL MODAL ══ -->
+<div id="place-modal" class="place-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-place-name">
+  <div class="place-modal-box">
+    <button class="place-modal-close" id="modal-close-btn" aria-label="Close">&times;</button>
+    <div class="place-modal-art" id="modal-art"></div>
+    <div class="place-modal-body">
+      <span class="place-category" id="modal-category"></span>
+      <h2 id="modal-place-name"></h2>
+      <div class="place-meta" id="modal-meta"></div>
+      <p id="modal-desc"></p>
+      <div class="tag-row" id="modal-tags"></div>
+      <div class="modal-info-row">
+        <span class="modal-info-item" id="modal-hours"></span>
+        <span class="modal-info-item" id="modal-budget-info"></span>
+        <span class="modal-info-item" id="modal-duration"></span>
+        <span class="modal-info-item" id="modal-rush"></span>
+      </div>
+      <div class="modal-reviews">
+        <h4>What people are saying</h4>
+        <div id="modal-reviews-list"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary modal-add-btn" id="modal-add-itinerary">＋ Add to Itinerary</button>
+        <button class="btn btn-outline modal-save-btn" id="modal-save-place">♡ Save Place</button>
+        <a class="btn btn-quiet" id="modal-directions" target="_blank" rel="noopener">⌖ Directions</a>
+        <a class="btn btn-quiet" id="modal-website" target="_blank" rel="noopener">↗ Website</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD TO ITINERARY MODAL ══ -->
+<div id="itinerary-picker-modal" class="place-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="itin-modal-title">
+  <div class="place-modal-box itin-modal-box">
+    <button class="place-modal-close" id="itin-modal-close" aria-label="Close">&times;</button>
+    <div class="itin-modal-inner">
+      <span class="eyebrow">ADD TO PLAN</span>
+      <h3 id="itin-modal-title">Adding "<span id="itin-place-name-label"></span>"</h3>
+
+      <div id="itin-step-choose">
+        <p>Choose an existing itinerary to add this place to, or start a new one.</p>
+        <div id="itin-list"></div>
+        <button class="btn btn-outline btn-full itin-new-btn" id="itin-create-new-btn">＋ Create a new itinerary</button>
+      </div>
+
+      <div id="itin-step-create" style="display:none;">
+        <p>Let's set up your new trip first.</p>
+        <label>Trip name<input type="text" id="new-trip-name" placeholder="e.g. Weekend in South Mumbai"></label>
+        <label>Trip date<input type="date" id="new-trip-date"></label>
+        <label>Starting from<input type="text" id="new-trip-start" placeholder="e.g. Dadar Station, Colaba…"></label>
+        <label>Number of people<input type="number" id="new-trip-people" min="1" max="50" value="2"></label>
+        <label>Group budget (₹)<input type="number" id="new-trip-budget" min="0" value="2000"></label>
+        <div class="itin-modal-btns">
+          <button class="btn btn-quiet" id="itin-back-btn">← Back</button>
+          <button class="btn btn-primary" id="itin-create-save-btn">Create &amp; Add ↗</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>{% block scripts %}{% endblock %}
+</body></html>
