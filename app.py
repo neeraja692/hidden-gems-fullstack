@@ -287,5 +287,8 @@ def api_itineraries():
     trips = conn.execute('SELECT id,title,trip_date,group_size FROM itineraries WHERE user_id=? ORDER BY created_at DESC',(session['user_id'],)).fetchall()
     conn.close()
     return jsonify({'trips': [dict(t) for t in trips]})
+import os
 
-if __name__ == '__main__': app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
