@@ -15,6 +15,20 @@ A responsive light-theme web prototype for **PS02: Hidden Gems – Local City Di
 - JSON demo endpoint at `/api/places`
 - Responsive desktop/mobile styling
 
+## Visual Tour & Screenshots
+
+| Landing Page | Discovery Engine |
+| :---: | :---: |
+| ![Landing Page](screenshots/landing_page_top_1792210822852.png) | ![Discover Places](screenshots/discover_page_1792210845513.png) |
+
+| Personalized Finder | Interactive Map |
+| :---: | :---: |
+| ![Finder Quiz & Route](screenshots/finder_results_1792211152373.png) | ![Interactive Map](screenshots/map_page_1792211188268.png) |
+
+| Smart Itinerary Planner | My Trips Dashboard |
+| :---: | :---: |
+| ![Planner](screenshots/planner_page_1792211206199.png) | ![Dashboard](screenshots/my_trips_page_1792211223408.png) |
+
 ## Run locally (Windows)
 1. Install Python 3.10 or newer.
 2. Extract the ZIP and open this folder in VS Code.
